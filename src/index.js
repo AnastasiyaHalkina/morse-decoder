@@ -37,8 +37,26 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
+String.prototype.replaceAll = function(search, replace){
+    return this.split(search).join(replace);
+  }
+
 function decode(expr) {
     // write your solution here
+    let result = '';
+
+    while (expr) {
+        let letter = expr.slice(0, 10);
+
+        if ( !letter.includes('*') ) {
+            letter = letter.replaceAll('10', '.').replaceAll('11', '-').replaceAll('0', '');
+            result += MORSE_TABLE[letter];
+        } else {
+            result += ' ';
+        }
+        expr = expr.slice(10);
+    }
+    return result;
 }
 
 module.exports = {
